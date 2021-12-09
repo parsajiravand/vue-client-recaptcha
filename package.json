@@ -1,0 +1,21 @@
+{
+  "name": "vue-client-recaptcha",
+  "version": "0.0.1",
+  "main": "./dist/index.js",
+  "description": "Build simple recaptcha for vuejs without server need",
+  "scripts": {
+    "dev": "vue serve src/VueClientRecaptcha.vue",
+    "build": "bili --name index --plugin vue --vue.css false"
+  },
+  "files": [
+    "dist/*"
+  ],
+  "author": "parsajiravand",
+  "license": "MIT",
+  "devDependencies": {
+    "bili": "^5.0.5",
+    "rollup-plugin-vue": "^5.1.1",
+    "vue-template-compiler": "^2.6.14"
+  },
+  "dependencies": {}
+}
