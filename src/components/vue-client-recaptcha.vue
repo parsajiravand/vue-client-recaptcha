@@ -1,6 +1,5 @@
 <template>
-  <jsxNode />
-  <render />
+ <render />
 </template>
 <script setup lang="ts">
 import {
