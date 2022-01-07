@@ -2,24 +2,19 @@
   <render />
 </template>
 <script setup lang="ts">
-import {
-  defineComponent,
-  h,
-  computed,
-  ref,
-  toRef,
-  onMounted,
-  watchEffect,
-onBeforeMount,
-} from "vue";
+import { h, ref, onMounted, watchEffect } from "vue";
 interface Props {
-  val?: string;
-  numbers: string[];
-  capitalCaseLetters: string[];
-  lowerCaseLetters: string[];
-  showNumbers: boolean;
-  showCapitalCaseLetters: boolean;
-  showLowerCaseLetters: boolean;
+  val: string;
+  numbers?: string[];
+  capitalCaseLetters?: string[];
+  lowerCaseLetters?: string[];
+  showNumbers?: boolean;
+  showCapitalCaseLetters?: boolean;
+  showLowerCaseLetters?: boolean;
+  count?: number;
+  hideLines?: boolean;
+  customTextColor?: string;
+  isDirty?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -84,13 +79,17 @@ const props = withDefaults(defineProps<Props>(), {
   showNumbers: true,
   showCapitalCaseLetters: true,
   showLowerCaseLetters: true,
+  count: 5,
+  hideLines: false,
+  customTextColor: "",
+  isDirty: true,
 });
 const emit = defineEmits(["isValid", "getCode"]);
 /* template refs */
 const captcha_canvas = ref();
 /* template refs */
 let canvasWidth = 150;
-let canvasHeight = 30;
+let canvasHeight = 50;
 
 const alpha = ref<any>([
   ...(props.showNumbers ? props.numbers : []),
@@ -101,50 +100,49 @@ const alpha = ref<any>([
 let code = ref("");
 
 onMounted(() => {
+  captcha();
+});
+const captcha = () => {
   captcha_canvas.value.width = canvasWidth;
   captcha_canvas.value.height = canvasHeight;
-  captcha();
-  createLines()
-});
-const captcha =  () => {
-  
+
   let ctx = captcha_canvas.value.getContext("2d");
-
-  let saCode = alpha.value;
-  let saCodeLen = saCode.length;
-
-  for (let i = 0; i < 6; i++) {
-    let sIndex = Math.floor(Math.random() * saCodeLen);
+  for (let i = 0; i < props.count; i++) {
+    let sIndex = Math.floor(Math.random() * alpha.value.length);
     let sDeg = (Math.random() * 30 * Math.PI) / 180;
-    let cTxt = saCode[sIndex];
+    let cTxt = alpha.value[sIndex];
     code.value += cTxt;
     alpha[i] = cTxt.toLowerCase();
-    let x = 10 + i * 20;
-    let y = 20 + Math.random() * 8;
+    let x = 10 + i * 25;
+    let y = 30 + Math.random() * 8;
     ctx.font = "bold 28px 微软雅黑";
     ctx.translate(x, y);
+    if (props.customTextColor) {
+      ctx.fillStyle = props.customTextColor;
+    } else {
+      ctx.fillStyle = randomColor();
+    }
     ctx.rotate(sDeg);
-
-    ctx.fillStyle = randomColor();
     ctx.fillText(cTxt, 0, 0);
-
     ctx.rotate(-sDeg);
     ctx.translate(-x, -y);
   }
+  if (!props.hideLines) {
+    createLines();
+  }
 };
-const createLines = ()=>{
+const createLines = () => {
   let ctx = captcha_canvas.value.getContext("2d");
-
- for (let i = 0; i <= 5; i++) {
+  for (let i = 0; i < props.count; i++) {
     ctx.strokeStyle = randomColor();
     ctx.beginPath();
     ctx.moveTo(Math.random() * canvasWidth, Math.random() * canvasHeight);
     ctx.lineTo(Math.random() * canvasWidth, Math.random() * canvasHeight);
     ctx.stroke();
   }
-}
+};
 watchEffect(() => {
-  if (code.value === props.val) {
+  if (code.value && code.value === props.val) {
     emit("isValid", true);
   } else {
     emit("isValid", false);
@@ -156,19 +154,18 @@ function randomColor() {
   let b = Math.floor(Math.random() * 256);
   return "rgb(" + r + "," + g + "," + b + ")";
 }
-const resetCaptcha = ()=>{
+const resetCaptcha = () => {
   let ctx = captcha_canvas.value.getContext("2d");
-  ctx.clearRect(0, 0,canvasWidth,canvasHeight);
-  createLines()
- code.value = "",
+  ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+  code.value = "";
   captcha();
-}
+};
 const render = () => {
   return h("div", [
     h(
       "canvas",
       {
-        style: "background:#eee;padding:10px 5px",
+        style: "background:#eee;padding:10px 0px",
         id: "captcha_canvas",
         ref: captcha_canvas,
       },
@@ -177,7 +174,7 @@ const render = () => {
     h(
       "button",
       {
-        onClick: () => resetCaptcha()
+        onClick: () => resetCaptcha(),
       },
       `change`
     ),
