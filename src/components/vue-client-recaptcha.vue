@@ -10,6 +10,7 @@ import {
   toRef,
   onMounted,
   watchEffect,
+onBeforeMount,
 } from "vue";
 interface Props {
   val?: string;
@@ -104,7 +105,6 @@ onMounted(() => {
   captcha_canvas.value.height = canvasHeight;
   captcha();
   createLines()
-  emit("getCode", code.value);
 });
 const captcha =  () => {
   
@@ -156,13 +156,19 @@ function randomColor() {
   let b = Math.floor(Math.random() * 256);
   return "rgb(" + r + "," + g + "," + b + ")";
 }
-
+const resetCaptcha = ()=>{
+  let ctx = captcha_canvas.value.getContext("2d");
+  ctx.clearRect(0, 0,canvasWidth,canvasHeight);
+  createLines()
+ code.value = "",
+  captcha();
+}
 const render = () => {
   return h("div", [
     h(
       "canvas",
       {
-        style: "background:#eee;padding:15px",
+        style: "background:#eee;padding:10px 5px",
         id: "captcha_canvas",
         ref: captcha_canvas,
       },
@@ -171,9 +177,7 @@ const render = () => {
     h(
       "button",
       {
-        onClick: () => {
-          (code.value = ""), captcha();
-        },
+        onClick: () => resetCaptcha()
       },
       `change`
     ),
