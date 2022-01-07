@@ -1,4 +1,11 @@
 <template>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+    integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
   <render />
 </template>
 <script setup lang="ts">
@@ -15,6 +22,10 @@ interface Props {
   hideLines?: boolean;
   customTextColor?: string;
   isDirty?: boolean;
+  width?: number;
+  height?: number;
+  canvasClass?: string;
+  icon?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -83,13 +94,17 @@ const props = withDefaults(defineProps<Props>(), {
   hideLines: false,
   customTextColor: "",
   isDirty: true,
+  width: 150,
+  height: 50,
+  canvasClass: "",
+  icon: "refresh",
 });
 const emit = defineEmits(["isValid", "getCode"]);
 /* template refs */
 const captcha_canvas = ref();
 /* template refs */
-let canvasWidth = 150;
-let canvasHeight = 50;
+let canvasWidth = props.width;
+let canvasHeight = props.height;
 
 const alpha = ref<any>([
   ...(props.showNumbers ? props.numbers : []),
@@ -161,23 +176,41 @@ const resetCaptcha = () => {
   captcha();
 };
 const render = () => {
-  return h("div", [
+  return h("div", { class: "vue_client_recaptcha" }, [
+     h("div", { class: "vue_client_recaptcha_icon " }, [
+      h("i",
+      {
+        onClick: () => resetCaptcha(),
+        class: `fa fa-${props.icon}`,
+      },)
+    ]),
     h(
       "canvas",
       {
         style: "background:#eee;padding:10px 0px",
         id: "captcha_canvas",
+        class: props.canvasClass,
         ref: captcha_canvas,
       },
       code.value
     ),
-    h(
-      "button",
-      {
-        onClick: () => resetCaptcha(),
-      },
-      `change`
-    ),
+   
   ]);
 };
 </script>
+<style>
+.vue_client_recaptcha {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
+.vue_client_recaptcha_icon {
+  text-align: center;
+  padding: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #eee;
+}
+</style>
