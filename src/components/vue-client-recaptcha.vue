@@ -1,5 +1,5 @@
 <template>
- <render />
+  <render />
 </template>
 <script setup lang="ts">
 import {
@@ -85,6 +85,11 @@ const props = withDefaults(defineProps<Props>(), {
   showLowerCaseLetters: true,
 });
 const emit = defineEmits(["isValid", "getCode"]);
+/* template refs */
+const captcha_canvas = ref();
+/* template refs */
+let canvasWidth = 150;
+let canvasHeight = 30;
 
 const alpha = ref<any>([
   ...(props.showNumbers ? props.numbers : []),
@@ -93,20 +98,51 @@ const alpha = ref<any>([
 ]);
 
 let code = ref("");
-onMounted(() => {
-  setTimeout(() => {
-      const canvas = document.getElementById("canvass");
-const ctx = canvas.getContext("2d");
-ctx.fillText(code.value,50,50);
-  }, 3000);
 
-})
-const captcha = () => {
-  let i;
-  for (i = 0; i < 6; i++) {
-    code.value += alpha.value[Math.floor(Math.random() * alpha.value.length)];
+onMounted(() => {
+  captcha_canvas.value.width = canvasWidth;
+  captcha_canvas.value.height = canvasHeight;
+  captcha();
+  createLines()
+  emit("getCode", code.value);
+});
+const captcha =  () => {
+  
+  let ctx = captcha_canvas.value.getContext("2d");
+
+  let saCode = alpha.value;
+  let saCodeLen = saCode.length;
+
+  for (let i = 0; i < 6; i++) {
+    let sIndex = Math.floor(Math.random() * saCodeLen);
+    let sDeg = (Math.random() * 30 * Math.PI) / 180;
+    let cTxt = saCode[sIndex];
+    code.value += cTxt;
+    alpha[i] = cTxt.toLowerCase();
+    let x = 10 + i * 20;
+    let y = 20 + Math.random() * 8;
+    ctx.font = "bold 28px 微软雅黑";
+    ctx.translate(x, y);
+    ctx.rotate(sDeg);
+
+    ctx.fillStyle = randomColor();
+    ctx.fillText(cTxt, 0, 0);
+
+    ctx.rotate(-sDeg);
+    ctx.translate(-x, -y);
   }
 };
+const createLines = ()=>{
+  let ctx = captcha_canvas.value.getContext("2d");
+
+ for (let i = 0; i <= 5; i++) {
+    ctx.strokeStyle = randomColor();
+    ctx.beginPath();
+    ctx.moveTo(Math.random() * canvasWidth, Math.random() * canvasHeight);
+    ctx.lineTo(Math.random() * canvasWidth, Math.random() * canvasHeight);
+    ctx.stroke();
+  }
+}
 watchEffect(() => {
   if (code.value === props.val) {
     emit("isValid", true);
@@ -114,14 +150,24 @@ watchEffect(() => {
     emit("isValid", false);
   }
 });
-onMounted(() => {
-  captcha();
-  emit("getCode", code.value);
-});
+function randomColor() {
+  let r = Math.floor(Math.random() * 256);
+  let g = Math.floor(Math.random() * 256);
+  let b = Math.floor(Math.random() * 256);
+  return "rgb(" + r + "," + g + "," + b + ")";
+}
 
 const render = () => {
   return h("div", [
-    h("canvas", { style: "background:#eee;padding:15px",id:"canvass" }, code.value),
+    h(
+      "canvas",
+      {
+        style: "background:#eee;padding:15px",
+        id: "captcha_canvas",
+        ref: captcha_canvas,
+      },
+      code.value
+    ),
     h(
       "button",
       {
