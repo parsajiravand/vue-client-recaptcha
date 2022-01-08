@@ -197,9 +197,8 @@ const render = () => {
     h(
       "canvas",
       {
-        style: "background:#eee;padding:10px 0px",
         id: "captcha_canvas",
-        class: props.canvasClass,
+        class: `captcha_canvas ${props.canvasClass}`,
         ref: captcha_canvas,
       },
       code.value
@@ -224,5 +223,8 @@ const render = () => {
 }
 .vue_client_recaptcha_icon:hover {
   background-color: #cccccc;
+}
+.vue_client_recaptcha .captcha_canvas{
+background:#eee;padding:10px 0px
 }
 </style>
