@@ -1,6 +1,6 @@
 {
   "name": "vue-client-recaptcha",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "parsajiravand",
   "license": "MIT",
   "description": "Build simple recaptcha for vuejs without need server",
