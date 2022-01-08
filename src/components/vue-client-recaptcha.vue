@@ -9,7 +9,7 @@
   <render />
 </template>
 <script setup lang="ts">
-import { h, ref, onMounted, watchEffect } from "vue";
+import { h, ref, onMounted, watchEffect, useSlots } from "vue";
 interface Props {
   val: string;
   numbers?: string[];
@@ -94,13 +94,19 @@ const props = withDefaults(defineProps<Props>(), {
   hideLines: false,
   customTextColor: "",
   isDirty: true,
-  width: function (props:any) {
-        return props.count *30
+  width: function (props: any) {
+    return props.count * 30;
   },
   height: 50,
   canvasClass: "",
   icon: "refresh",
 });
+
+/* access slots */
+const slots = useSlots();
+console.log(slots.header);
+/* access slots */
+
 const emit = defineEmits(["isValid", "getCode"]);
 /* template refs */
 const captcha_canvas = ref();
@@ -165,12 +171,12 @@ watchEffect(() => {
     emit("isValid", false);
   }
 });
-const randomColor=()=> {
+const randomColor = () => {
   let r = Math.floor(Math.random() * 256);
   let g = Math.floor(Math.random() * 256);
   let b = Math.floor(Math.random() * 256);
   return "rgb(" + r + "," + g + "," + b + ")";
-}
+};
 const resetCaptcha = () => {
   let ctx = captcha_canvas.value.getContext("2d");
   ctx.clearRect(0, 0, canvasWidth, canvasHeight);
@@ -179,13 +185,15 @@ const resetCaptcha = () => {
 };
 const render = () => {
   return h("div", { class: "vue_client_recaptcha" }, [
-     h("div", { class: "vue_client_recaptcha_icon", onClick: () => resetCaptcha() }, [
-      h("i",
-      {
-       
-        class: `fa fa-${props.icon}`,
-      },)
-    ]),
+    h(
+      "div",
+      { class: "vue_client_recaptcha_icon", onClick: () => resetCaptcha() },
+      [
+        h(slots.icon ? slots.icon : "i", {
+          class: `fa fa-${props.icon}`,
+        }),
+      ]
+    ),
     h(
       "canvas",
       {
@@ -196,7 +204,6 @@ const render = () => {
       },
       code.value
     ),
-   
   ]);
 };
 </script>
@@ -216,6 +223,6 @@ const render = () => {
   background-color: #eee;
 }
 .vue_client_recaptcha_icon:hover {
-background-color: #cccccc;
+  background-color: #cccccc;
 }
 </style>
