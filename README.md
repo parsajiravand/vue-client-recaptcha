@@ -27,7 +27,17 @@ yarn add vue-client-recaptcha
 | width  | width of captcha | `any`  | `count * 30`
 | height  | width of captcha | `number`  | `50`
 | canvasClass  | can set custom class for canvas | `string`  | ``
-| icon  | set icon name for change captcha code source:font-awsome-4.7  | `string`  | `refresh`                                                                                                                 
+| icon  | set icon name for change captcha code source:font-awsome-4.7  | `string`  | `refresh`                                                                                                           
+### Events
+
+| Event            | Value  | Description                                    |
+| ---------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `@isValid` | Boolean | can listen to payload , if your value and captcha code same return True otherwise return False |
+### slots
+
+| Name    | description |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `icon`  | can set your custom template for icon  or changed to text (default icon is 'refresh' from fontawsome also you can change it with props  |      
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
