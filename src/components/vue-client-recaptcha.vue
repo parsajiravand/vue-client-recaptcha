@@ -22,7 +22,7 @@ interface Props {
   hideLines?: boolean;
   customTextColor?: string;
   isDirty?: boolean;
-  width?: number;
+  width?: any;
   height?: number;
   canvasClass?: string;
   icon?: string;
@@ -94,7 +94,9 @@ const props = withDefaults(defineProps<Props>(), {
   hideLines: false,
   customTextColor: "",
   isDirty: true,
-  width: 150,
+  width: function (props:any) {
+        return props.count *30
+  },
   height: 50,
   canvasClass: "",
   icon: "refresh",
@@ -163,7 +165,7 @@ watchEffect(() => {
     emit("isValid", false);
   }
 });
-function randomColor() {
+const randomColor=()=> {
   let r = Math.floor(Math.random() * 256);
   let g = Math.floor(Math.random() * 256);
   let b = Math.floor(Math.random() * 256);
@@ -177,10 +179,10 @@ const resetCaptcha = () => {
 };
 const render = () => {
   return h("div", { class: "vue_client_recaptcha" }, [
-     h("div", { class: "vue_client_recaptcha_icon " }, [
+     h("div", { class: "vue_client_recaptcha_icon", onClick: () => resetCaptcha() }, [
       h("i",
       {
-        onClick: () => resetCaptcha(),
+       
         class: `fa fa-${props.icon}`,
       },)
     ]),
@@ -212,5 +214,8 @@ const render = () => {
   align-items: center;
   justify-content: center;
   background-color: #eee;
+}
+.vue_client_recaptcha_icon:hover {
+background-color: #cccccc;
 }
 </style>
