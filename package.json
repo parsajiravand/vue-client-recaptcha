@@ -8,10 +8,10 @@
     "dist"
   ],
   "main": "./dist/vue-client-recaptcha.umd.js",
-  "module": "./dist/vue-client-recaptcha.js",
+  "module": "./dist/vue-client-recaptcha.es.js",
   "exports": {
     ".": {
-      "import": "./dist/vue-client-recaptcha.js",
+      "import": "./dist/vue-client-recaptcha.es.js",
       "require": "./dist/vue-client-recaptcha.umd.js"
     }
   },
@@ -26,7 +26,6 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.0.0",
-    "rollup-plugin-typescript2": "^0.31.1",
     "typescript": "^4.4.4",
     "vite": "^2.7.2",
     "vue-tsc": "^0.29.8"

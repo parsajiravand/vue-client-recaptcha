@@ -1,11 +1,4 @@
 <template>
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
-    integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
-    crossorigin="anonymous"
-    referrerpolicy="no-referrer"
-  />
   <render />
 </template>
 <script setup lang="ts">
@@ -107,22 +100,31 @@ const slots = useSlots();
 console.log(slots.header);
 /* access slots */
 
+/* emits to parnet */
 const emit = defineEmits(["isValid", "getCode"]);
+/* emits to parnet */
+
 /* template refs */
 const captcha_canvas = ref();
 /* template refs */
+
+/* Variables */
+let code = ref("");
 let canvasWidth = props.width;
 let canvasHeight = props.height;
 
-const alpha = ref<any>([
+/* default have numbers and Englishletters(capital,lower)
+  you can set your custom letters or remove each of these items
+*/
+const letters = ref<any>([
   ...(props.showNumbers ? props.numbers : []),
   ...(props.showCapitalCaseLetters ? props.capitalCaseLetters : []),
   ...(props.showLowerCaseLetters ? props.lowerCaseLetters : []),
 ]);
-
-let code = ref("");
+/* Variables */
 
 onMounted(() => {
+  /* generate captcha for first time */
   captcha();
 });
 const captcha = () => {
@@ -131,11 +133,11 @@ const captcha = () => {
 
   let ctx = captcha_canvas.value.getContext("2d");
   for (let i = 0; i < props.count; i++) {
-    let sIndex = Math.floor(Math.random() * alpha.value.length);
+    let sIndex = Math.floor(Math.random() * letters.value.length);
     let sDeg = (Math.random() * 30 * Math.PI) / 180;
-    let cTxt = alpha.value[sIndex];
+    let cTxt = letters.value[sIndex];
     code.value += cTxt;
-    alpha[i] = cTxt.toLowerCase();
+    letters[i] = cTxt.toLowerCase();
     let x = 10 + i * 25;
     let y = 30 + Math.random() * 8;
     ctx.font = "bold 28px 微软雅黑";
@@ -172,6 +174,7 @@ watchEffect(() => {
   }
 });
 const randomColor = () => {
+  /* this function can generate random color for letters and dirtyLines */
   let r = Math.floor(Math.random() * 256);
   let g = Math.floor(Math.random() * 256);
   let b = Math.floor(Math.random() * 256);
@@ -189,8 +192,8 @@ const render = () => {
       "div",
       { class: "vue_client_recaptcha_icon", onClick: () => resetCaptcha() },
       [
-        h(slots.icon ? slots.icon : "i", {
-          class: `fa fa-${props.icon}`,
+        h(slots.icon ? slots.icon : "img", {
+          src:'/refresh.svg',
         }),
       ]
     ),

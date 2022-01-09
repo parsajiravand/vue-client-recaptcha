@@ -12,8 +12,11 @@ const val = ref("");
   <VueClientRecaptcha
     :val="val"
     :show-numbers="true"
-    :showCapitalCaseLetters="true"
-    :showLowerCaseLetters="true"
+    :showCapitalCaseLetters="false"
+    :showLowerCaseLetters="false"
+    :count="5"
+    :hideLines="false"
+    customTextColor=""
   />
 </template>
 
