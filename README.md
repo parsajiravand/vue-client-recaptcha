@@ -9,11 +9,30 @@ npm install vue-client-recaptcha --save
 ```bash
 yarn add vue-client-recaptcha
 ```
+## Usage
+1. You can import globally in your vue-3 project (main.js)
 
+```javascript
+import { createApp } from 'vue'
+import VueClientRecaptcha from 'vue-client-recaptcha/dist/vue-client-recaptcha.es'
+
+const app= createApp(App)
+app.component("VueClientRecaptcha", VueClientRecaptcha);  
+```
+2. You can import localy in your vue-3 component
+```javascript
+import VueClientRecaptcha from 'vue-client-recaptcha/dist/vue-client-recaptcha.es'
+
+export default {
+  components: {
+    VueClientRecaptcha,
+  },
+}
+```
 ## Props
 
-| Name                  | Description                                           | Type       | Default                                                              |
-| --------------------  | ----------------------------------------------------- | --------   | ------------------------|
+| Name                  | Description                                                   | Type       | Default               |
+| --------------------  | -------------------------------------------------------------------------------------------------------------------- | --------   | ------------------------|
 | val                   | width of captcha image.                               | `string`   | ``                                                                |
 | numbers               | height of captcha image.                              | `string[]` | `0123456789`                                                                
 | capitalCaseLetters    | fontSize of captcha characters.                       | `string[]` | `ABCDEFGHIJKLMNOPQRSTUVWXYZ`                                                                 |
@@ -27,15 +46,15 @@ yarn add vue-client-recaptcha
 | width  | width of captcha | `any`  | `count * 30`
 | height  | width of captcha | `number`  | `50`
 | canvasClass  | can set custom class for canvas | `string`  | ``
-| icon  | set icon name for change captcha code source:font-awsome-4.7  | `string`  | `refresh`                                                                                                           
-### Events
+                                                                                                          
+## Events
 
 | Event            | Value  | Description                                    |
 | ---------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `@isValid` | Boolean | can listen to payload , if your value and captcha code same return True otherwise return False |
-### slots
+## slots
 
-| Name    | description |
+| Name    | Description |
 | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `icon`  | can set your custom template for icon  or changed to text (default icon is 'refresh' from fontawsome also you can change it with props  |      
 ## Contributing
