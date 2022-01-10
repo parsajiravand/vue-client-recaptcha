@@ -4,6 +4,7 @@
   "author": "parsajiravand",
   "license": "MIT",
   "description": "Build simple recaptcha for vuejs without need server",
+  "repository": "https://github.com/parsajiravand/vue-client-recaptcha",
   "files": [
     "dist"
   ],
