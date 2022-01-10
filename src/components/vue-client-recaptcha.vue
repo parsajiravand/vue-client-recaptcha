@@ -4,7 +4,7 @@
 <script setup lang="ts">
 import { h, ref, onMounted, watchEffect, useSlots } from "vue";
 interface Props {
-  val: string;
+  value?: string;
   numbers?: string[];
   capitalCaseLetters?: string[];
   lowerCaseLetters?: string[];
@@ -22,7 +22,7 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  val: "",
+  value: "",
   numbers: () => ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
   capitalCaseLetters: () => [
     "A",
@@ -155,6 +155,7 @@ const captcha = () => {
   if (!props.hideLines) {
     createLines();
   }
+  sendValueToParent()
 };
 const createLines = () => {
   let ctx = captcha_canvas.value.getContext("2d");
@@ -166,8 +167,11 @@ const createLines = () => {
     ctx.stroke();
   }
 };
+const sendValueToParent = ()=>{
+  emit("getCode", code.value);
+}
 watchEffect(() => {
-  if (code.value && code.value === props.val) {
+  if (code.value && code.value === props.value) {
     emit("isValid", true);
   } else {
     emit("isValid", false);

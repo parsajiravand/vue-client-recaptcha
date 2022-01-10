@@ -1,10 +1,11 @@
 {
   "name": "vue-client-recaptcha",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "author": "parsajiravand",
   "license": "MIT",
   "description": "Build simple recaptcha for vuejs without need server",
   "repository": "https://github.com/parsajiravand/vue-client-recaptcha",
+  "homepage": "https://github.com/parsajiravand/vue-client-recaptcha",
   "files": [
     "dist"
   ],
@@ -22,13 +23,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "vite-plugin-package-config": "^0.1.1",
     "vue": "^3.2.25"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.0.0",
     "typescript": "^4.4.4",
     "vite": "^2.7.2",
+    "vite-plugin-package-config": "^0.1.1",
     "vue-tsc": "^0.29.8"
   }
 }

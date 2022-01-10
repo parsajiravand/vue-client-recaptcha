@@ -2,6 +2,9 @@
 # vue-client-recaptcha
 Build simple recaptcha for vuejs without need server
 
+## Dependencies
+- required: Vuejs >= 3.x
+
 ## Installation
 ```bash
 npm install vue-client-recaptcha --save
@@ -23,15 +26,32 @@ app.component("VueClientRecaptcha", VueClientRecaptcha);
 ```javascript
 import VueClientRecaptcha from 'vue-client-recaptcha/dist/vue-client-recaptcha.es'
 
+<!--Optional style.css-->
+import 'vue-client-recaptcha/dist/style.css';
+
 export default {
   components: {
     VueClientRecaptcha,
   },
 }
 ```
+2. You can import localy in your vue-3 component
+```javascript
+import VueClientRecaptcha from 'vue-client-recaptcha/dist/vue-client-recaptcha.es'
+
+<!--Optional style.css-->
+import 'vue-client-recaptcha/dist/style.css';
+
+export default {
+  components: {
+    VueClientRecaptcha,
+  },
+}
+```
+
 ## Props
 
-| Name                  | Description                                                   | Type       | Default               |
+| Name                  | Description                                                       | Type       | Default               |
 | --------------------  | -------------------------------------------------------------------------------------------------------------------- | --------   | ------------------------|
 | val                   | width of captcha image.                               | `string`   | ``                                                                |
 | numbers               | height of captcha image.                              | `string[]` | `0123456789`                                                                
@@ -56,7 +76,51 @@ export default {
 
 | Name    | Description |
 | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `icon`  | can set your custom template for icon  or changed to text (default icon is 'refresh' from fontawsome also you can change it with props  |      
+| `icon`  | can set your custom template for icon  or changed to text (default icon is 'refresh' from fontawsome also you can change it with props  |     
+###  Examples
+```html
+<template>
+  <div class="sample-captcha">
+    <input type="text" v-model="inputValue" />
+
+    <VueClientRecaptcha
+      :value="inputValue"
+      @getCode="getCaptchaCode"
+      @isValid="checkValidCaptcha"
+    />
+  </div>
+</template>
+
+<script>
+import { ref } from "vue";
+import VueClientRecaptcha from "vue-client-recaptcha/dist/vue-client-recaptcha.es";
+import "vue-client-recaptcha/dist/style.css";
+export default {
+  components: {
+    VueClientRecaptcha,
+  },
+  setup() {
+    /* pass value to captcha  */
+    const inputValue = ref(null);
+
+    const getCaptchaCode = (value) => {
+      /* you can access captcha code */
+      console.log(value);
+    };
+    const checkValidCaptcha = (value) => {
+      /* expected return boolean if your value and captcha code are same return True otherwise return False */
+      console.log(value);
+    };
+    return {
+      inputValue,
+      getCaptchaCode,
+      checkValidCaptcha,
+    };
+  },
+};
+</script>
+
+```
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
