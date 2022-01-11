@@ -1,7 +1,7 @@
 
 # vue-client-recaptcha
 Build simple recaptcha for vuejs without need server
-
+![vue-client-recaptcha](https://i.postimg.cc/1fF5NyVV/captcha.png)
 ## Dependencies
 - required: Vuejs >= 3.x
 
@@ -59,6 +59,7 @@ export default {
 | Event            | Value  | Description                                    |
 | ---------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `@isValid` | Boolean | can listen to payload , if your value and captcha code same return True otherwise return False |
+| `@getCode` | String | can listen to payload , get captcha value and set variable |
 ## Slots
 
 | Name    | Description |
@@ -114,6 +115,7 @@ export default {
   <div class="sample-captcha">
     <input type="text" v-model="inputValue" />
     <!-- Hide Letters And Show NumbersOnly Without Lines -->
+    <!-- Can Set Your Custom Icon Or Text With Slot -->
     <VueClientRecaptcha
       :value="inputValue"
       :hideLines="true"
