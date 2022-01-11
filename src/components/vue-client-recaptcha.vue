@@ -4,10 +4,10 @@
 <script setup lang="ts">
 import { h, ref, onMounted, watchEffect, useSlots } from "vue";
 interface Props {
-  value?: string;
-  numbers?: string[];
-  capitalCaseLetters?: string[];
-  lowerCaseLetters?: string[];
+  value?: string|null;
+  numbers?: string[]|string;
+  capitalCaseLetters?: string[]|string;
+  lowerCaseLetters?: string[]|string;
   showNumbers?: boolean;
   showCapitalCaseLetters?: boolean;
   showLowerCaseLetters?: boolean;
@@ -197,7 +197,8 @@ const render = () => {
       { class: "vue_client_recaptcha_icon", onClick: () => resetCaptcha() },
       [
         h(slots.icon ? slots.icon : "img", {
-          src:'/refresh.svg',
+          src:'https://www.freeiconspng.com/uploads/black-refresh-icon-png-9.png',
+          style:'width:60px'
         }),
       ]
     ),

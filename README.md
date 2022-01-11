@@ -1,7 +1,7 @@
 
 # vue-client-recaptcha
 Build simple recaptcha for vuejs without need server
-
+![vue-client-recaptcha](https://i.postimg.cc/1fF5NyVV/captcha.png)
 ## Dependencies
 - required: Vuejs >= 3.x
 
@@ -21,19 +21,6 @@ import VueClientRecaptcha from 'vue-client-recaptcha/dist/vue-client-recaptcha.e
 
 const app= createApp(App)
 app.component("VueClientRecaptcha", VueClientRecaptcha);  
-```
-2. You can import localy in your vue-3 component
-```javascript
-import VueClientRecaptcha from 'vue-client-recaptcha/dist/vue-client-recaptcha.es'
-
-<!--Optional style.css-->
-import 'vue-client-recaptcha/dist/style.css';
-
-export default {
-  components: {
-    VueClientRecaptcha,
-  },
-}
 ```
 2. You can import localy in your vue-3 component
 ```javascript
@@ -72,7 +59,8 @@ export default {
 | Event            | Value  | Description                                    |
 | ---------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `@isValid` | Boolean | can listen to payload , if your value and captcha code same return True otherwise return False |
-## slots
+| `@getCode` | String | can listen to payload , get captcha value and set variable |
+## Slots
 
 | Name    | Description |
 | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -120,6 +108,106 @@ export default {
 };
 </script>
 
+```
+####  SampleSimpleMode
+```html
+<template>
+  <div class="sample-captcha">
+    <input type="text" v-model="inputValue" />
+    <!-- Hide Letters And Show NumbersOnly Without Lines -->
+    <!-- Can Set Your Custom Icon Or Text With Slot -->
+    <VueClientRecaptcha
+      :value="inputValue"
+      :hideLines="true"
+      :show-capital-case-letters="false"
+      :show-lower-case-letters="false"
+      custom-text-color="black"
+      @getCode="getCaptchaCode"
+      @isValid="checkValidCaptcha"
+    >
+      <template #icon>
+       <span style="color:blue">with Custom Text Or Icon</span> 
+        </template>
+    </VueClientRecaptcha>
+  </div>
+</template>
+
+<script>
+import { ref } from "vue";
+import VueClientRecaptcha from "vue-client-recaptcha/dist/vue-client-recaptcha.es";
+import "vue-client-recaptcha/dist/style.css";
+export default {
+  components: {
+    VueClientRecaptcha,
+  },
+  setup() {
+    /* pass value to captcha  */
+    const inputValue = ref(null);
+
+    const getCaptchaCode = (value) => {
+      /* you can access captcha code */
+      console.log(value);
+    };
+    const checkValidCaptcha = (value) => {
+      /* expected return boolean if your value and captcha code are same return True otherwise return False */
+      console.log(value);
+    };
+    return {
+      inputValue,
+      getCaptchaCode,
+      checkValidCaptcha,
+    };
+  },
+};
+</script>
+```
+####  SampleWithCustomLetter
+```html
+<template>
+  <div class="sample-captcha">
+    <input type="text" v-model="inputValue" />
+    <!-- Hide CapitalCase And Number And Set Custom Carachters -->
+    <!-- Set 10 Charachter -->
+    <VueClientRecaptcha
+      :value="inputValue"
+      :show-capital-case-letters="false"
+      :show-numbers="false"
+      lower-case-letters="!@#$%^&"
+      :count="10"
+      @getCode="getCaptchaCode"
+      @isValid="checkValidCaptcha"
+    />
+  </div>
+</template>
+
+<script>
+import { ref } from "vue";
+import VueClientRecaptcha from "vue-client-recaptcha/dist/vue-client-recaptcha.es";
+import "vue-client-recaptcha/dist/style.css";
+export default {
+  components: {
+    VueClientRecaptcha,
+  },
+  setup() {
+    /* pass value to captcha  */
+    const inputValue = ref(null);
+
+    const getCaptchaCode = (value) => {
+      /* you can access captcha code */
+      console.log(value);
+    };
+    const checkValidCaptcha = (value) => {
+      /* expected return boolean if your value and captcha code are same return True otherwise return False */
+      console.log(value);
+    };
+    return {
+      inputValue,
+      getCaptchaCode,
+      checkValidCaptcha,
+    };
+  },
+};
+</script>
 ```
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
