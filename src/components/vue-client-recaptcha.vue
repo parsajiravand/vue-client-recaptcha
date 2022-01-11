@@ -4,10 +4,10 @@
 <script setup lang="ts">
 import { h, ref, onMounted, watchEffect, useSlots } from "vue";
 interface Props {
-  value?: string;
-  numbers?: string[];
-  capitalCaseLetters?: string[];
-  lowerCaseLetters?: string[];
+  value?: string|null;
+  numbers?: string[]|string;
+  capitalCaseLetters?: string[]|string;
+  lowerCaseLetters?: string[]|string;
   showNumbers?: boolean;
   showCapitalCaseLetters?: boolean;
   showLowerCaseLetters?: boolean;

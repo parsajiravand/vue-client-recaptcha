@@ -4,6 +4,10 @@
 
     <VueClientRecaptcha
       :value="inputValue"
+      :show-capital-case-letters="false"
+      :show-numbers="false"
+      lower-case-letters="!@#$%^&"
+      :count="10"
       @getCode="getCaptchaCode"
       @isValid="checkValidCaptcha"
     />
@@ -17,15 +21,18 @@ export default defineComponent({
   components: {
     VueClientRecaptcha,
   },
-  setup() {
+  setup()
+  {
     /* pass value to captcha  */
-    const inputValue = ref<string|null>(null);
+    const inputValue = ref<string | null>(null);
 
-    const getCaptchaCode = (value:string) => {
+    const getCaptchaCode = (value: string) =>
+    {
       /* you can access captcha code */
       console.log(value);
     };
-    const checkValidCaptcha = (value:string) => {
+    const checkValidCaptcha = (value: string) =>
+    {
       /* expected return boolean if your value and captcha code are same return True otherwise return False */
       console.log(value);
     };
@@ -35,5 +42,5 @@ export default defineComponent({
       checkValidCaptcha,
     };
   },
-})
+});
 </script>
