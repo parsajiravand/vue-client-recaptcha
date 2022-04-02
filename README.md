@@ -40,13 +40,8 @@ export default {
 
 | Name                  | Description                                                       | Type       | Default               |
 | --------------------  | -------------------------------------------------------------------------------------------------------------------- | --------   | ------------------------|
-| val                   | width of captcha image.                               | `string`   | ``                                                                |
-| numbers               | height of captcha image.                              | `string[]` | `0123456789`                                                                
-| capitalCaseLetters    | fontSize of captcha characters.                       | `string[]` | `ABCDEFGHIJKLMNOPQRSTUVWXYZ`                                                                 |
-| lowerCaseLetters      | fontFamily of captcha characters.                     | `string[]` | `abcdefghijklmnopqrstuvwxyz`                                                   
-| showNumbers           | fontColor of captcha characters.                      | `boolean`  | `true`                                                             
-| showCapitalCaseLetters| characters that captcha should be made with.          | `boolean`  | `true` 
-| showLowerCaseLetters  | count of characters that captcha should be made with. | `boolean`  | `true`     
+| value                   | send the value with the component and check the entered value correctly                            | `string`   | ``                                                                |
+| chars               | characters that captcha should be made with.                              | `string` | `abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789`                                                                
 | count  | number of character | `number`  | `5`   
 | hideLines  | hide dirty line and make captcha simple | `boolean`  | `false`   
 | customTextColor  | set text color for characters | `string`  | ``   
@@ -118,9 +113,9 @@ export default {
     <!-- Can Set Your Custom Icon Or Text With Slot -->
     <VueClientRecaptcha
       :value="inputValue"
+      :count="4"
+      chars="12345"
       :hideLines="true"
-      :show-capital-case-letters="false"
-      :show-lower-case-letters="false"
       custom-text-color="black"
       @getCode="getCaptchaCode"
       @isValid="checkValidCaptcha"
@@ -170,9 +165,7 @@ export default {
     <!-- Set 10 Charachter -->
     <VueClientRecaptcha
       :value="inputValue"
-      :show-capital-case-letters="false"
-      :show-numbers="false"
-      lower-case-letters="!@#$%^&"
+      chars="!@#$%^&*"
       :count="10"
       @getCode="getCaptchaCode"
       @isValid="checkValidCaptcha"
