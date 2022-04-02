@@ -4,13 +4,8 @@
 <script setup lang="ts">
 import { h, ref, onMounted, watchEffect, useSlots } from "vue";
 interface Props {
-  value?: string|null;
-  numbers?: string[]|string;
-  capitalCaseLetters?: string[]|string;
-  lowerCaseLetters?: string[]|string;
-  showNumbers?: boolean;
-  showCapitalCaseLetters?: boolean;
-  showLowerCaseLetters?: boolean;
+  value?: string | null;
+  chars?: string;
   count?: number;
   hideLines?: boolean;
   customTextColor?: string;
@@ -23,66 +18,7 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   value: "",
-  numbers: () => ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
-  capitalCaseLetters: () => [
-    "A",
-    "B",
-    "C",
-    "D",
-    "E",
-    "F",
-    "G",
-    "H",
-    "I",
-    "J",
-    "K",
-    "L",
-    "M",
-    "N",
-    "O",
-    "P",
-    "Q",
-    "R",
-    "S",
-    "T",
-    "U",
-    "V",
-    "W",
-    "X",
-    "Y",
-    "Z",
-  ],
-  lowerCaseLetters: () => [
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    "f",
-    "g",
-    "h",
-    "i",
-    "j",
-    "k",
-    "l",
-    "m",
-    "n",
-    "o",
-    "p",
-    "q",
-    "r",
-    "s",
-    "t",
-    "u",
-    "v",
-    "w",
-    "x",
-    "y",
-    "z",
-  ],
-  showNumbers: true,
-  showCapitalCaseLetters: true,
-  showLowerCaseLetters: true,
+  chars: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
   count: 5,
   hideLines: false,
   customTextColor: "",
@@ -112,15 +48,6 @@ const captcha_canvas = ref();
 let code = ref("");
 let canvasWidth = props.width;
 let canvasHeight = props.height;
-
-/* default have numbers and Englishletters(capital,lower)
-  you can set your custom letters or remove each of these items
-*/
-const letters = ref<any>([
-  ...(props.showNumbers ? props.numbers : []),
-  ...(props.showCapitalCaseLetters ? props.capitalCaseLetters : []),
-  ...(props.showLowerCaseLetters ? props.lowerCaseLetters : []),
-]);
 /* Variables */
 
 onMounted(() => {
@@ -133,11 +60,11 @@ const captcha = () => {
 
   let ctx = captcha_canvas.value.getContext("2d");
   for (let i = 0; i < props.count; i++) {
-    let sIndex = Math.floor(Math.random() * letters.value.length);
+    let sIndex = Math.floor(Math.random() * props.chars.length);
     let sDeg = (Math.random() * 30 * Math.PI) / 180;
-    let cTxt = letters.value[sIndex];
+    let cTxt = props.chars[sIndex];
     code.value += cTxt;
-    letters[i] = cTxt.toLowerCase();
+    /* props.chars = cTxt.toLowerCase(); */
     let x = 10 + i * 25;
     let y = 30 + Math.random() * 8;
     ctx.font = "bold 28px 微软雅黑";
@@ -155,7 +82,7 @@ const captcha = () => {
   if (!props.hideLines) {
     createLines();
   }
-  sendValueToParent()
+  sendValueToParent();
 };
 const createLines = () => {
   let ctx = captcha_canvas.value.getContext("2d");
@@ -167,9 +94,9 @@ const createLines = () => {
     ctx.stroke();
   }
 };
-const sendValueToParent = ()=>{
+const sendValueToParent = () => {
   emit("getCode", code.value);
-}
+};
 watchEffect(() => {
   if (code.value && code.value === props.value) {
     emit("isValid", true);
@@ -197,8 +124,8 @@ const render = () => {
       { class: "vue_client_recaptcha_icon", onClick: () => resetCaptcha() },
       [
         h(slots.icon ? slots.icon : "img", {
-          src:'https://www.freeiconspng.com/uploads/black-refresh-icon-png-9.png',
-          style:'width:60px'
+          src: "https://www.freeiconspng.com/uploads/black-refresh-icon-png-9.png",
+          style: "width:60px",
         }),
       ]
     ),
@@ -232,7 +159,8 @@ const render = () => {
 .vue_client_recaptcha_icon:hover {
   background-color: #cccccc;
 }
-.vue_client_recaptcha .captcha_canvas{
-background:#eee;padding:10px 0px
+.vue_client_recaptcha .captcha_canvas {
+  background: #eee;
+  padding: 10px 0px;
 }
 </style>

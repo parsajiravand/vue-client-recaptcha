@@ -4,10 +4,8 @@
 
     <VueClientRecaptcha
       :value="inputValue"
-      :show-capital-case-letters="false"
-      :show-numbers="false"
-      lower-case-letters="!@#$%^&"
       :count="10"
+      chars="!@#$%^&*"
       @getCode="getCaptchaCode"
       @isValid="checkValidCaptcha"
     />
@@ -29,7 +27,7 @@ export default defineComponent({
     const getCaptchaCode = (value: string) =>
     {
       /* you can access captcha code */
-      console.log(value);
+      console.log('captcha code',value);
     };
     const checkValidCaptcha = (value: string) =>
     {
