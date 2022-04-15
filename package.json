@@ -1,32 +1,60 @@
 {
   "name": "vue-client-recaptcha",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "parsajiravand",
   "license": "MIT",
   "description": "Build simple recaptcha for vuejs without need server",
+  "main": "dist/vue-client-recaptcha.cjs.js",
+  "unpkg": "dist/vue-client-recaptcha.global.js",
+  "jsdelivr": "dist/vue-client-recaptcha.global.js",
+  "module": "dist/vue-client-recaptcha.esm-bundler.js",
+  "types": "dist/vue-client-recaptcha.d.ts",
+  "sideEffects": false,
   "repository": "https://github.com/parsajiravand/vue-client-recaptcha",
   "homepage": "https://github.com/parsajiravand/vue-client-recaptcha",
   "files": [
-    "dist"
+    "dist/*.js",
+    "dist/*.css",
+    "dist/vue-color-kit.d.ts",
+    "LICENSE",
+    "README.md"
   ],
-  "main": "./dist/vue-client-recaptcha.umd.js",
-  "module": "./dist/vue-client-recaptcha.es.js",
-  "exports": {
-    ".": {
-      "import": "./dist/vue-client-recaptcha.es.js",
-      "require": "./dist/vue-client-recaptcha.umd.js"
-    }
-  },
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
+    "build:pkg": "rollup -c rollup.config.js",
     "preview": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.2.25"
+    "vue": "^3.2.25",
+    "vue-color-kit": "^1.0.5"
   },
   "devDependencies": {
+    "@rollup/plugin-alias": "^3.1.1",
+    "@rollup/plugin-commonjs": "^18.1.0",
+    "@rollup/plugin-node-resolve": "^11.2.1",
+    "@rollup/plugin-replace": "^2.3.4",
+    "@size-limit/preset-small-lib": "^4.7.0",
     "@vitejs/plugin-vue": "^2.0.0",
+    "@vue/cli-service": "^4.5.6",
+    "@vue/compiler-sfc": "^3.0.5",
+    "autoprefixer": "^10.0.2",
+    "codecov": "^3.8.1",
+    "conventional-changelog-cli": "^2.1.1",
+    "cross-env": "^7.0.2",
+    "lint-staged": "^10.5.1",
+    "mini-css-extract-plugin": "^1.6.0",
+    "pascalcase": "^1.0.0",
+    "prettier": "^2.1.2",
+    "prismjs": "^1.22.0",
+    "rollup": "^2.33.3",
+    "rollup-plugin-postcss": "^3.1.8",
+    "rollup-plugin-scss": "^2.6.1",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-typescript2": "^0.29.0",
+    "rollup-plugin-vue": "^6.0.0-beta.10",
+    "sass": "^1.29.0",
+    "sass-loader": "^10.1.0",
     "typescript": "^4.4.4",
     "vite": "^2.7.2",
     "vite-plugin-package-config": "^0.1.1",

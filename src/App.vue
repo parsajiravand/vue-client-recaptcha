@@ -14,7 +14,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
-import VueClientRecaptcha from "./components/vue-client-recaptcha.vue";
+import * as VueClientRecaptcha from "../dist/components"
 export default defineComponent({
   components: {
     VueClientRecaptcha,

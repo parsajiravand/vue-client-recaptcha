@@ -4,7 +4,7 @@
 <script setup lang="ts">
 import { h, ref, onMounted, watchEffect, useSlots } from "vue";
 interface Props {
-  value?: string | null;
+  value?: string;
   chars?: string;
   count?: number;
   hideLines?: boolean;
