@@ -6,13 +6,7 @@ import pkg from "./package.json";
 
 // https://vitejs.dev/config/
 
-const banner = `/*
- * ${pkg.name}
- * ${pkg.description}
- * v${pkg.version}
- * ${pkg.license} License
- */
-`;
+
 export default defineConfig({
 
   build: {
@@ -33,5 +27,12 @@ export default defineConfig({
       },
     },
   },
-  plugins: [vue()],
+  plugins: [vue(),banner(`/*
+ * ${pkg.name}
+ * Creator:${pkg.author}
+ * ${pkg.description}
+ * v${pkg.version}
+ * ${pkg.license} License
+ */
+`) ],
 });
