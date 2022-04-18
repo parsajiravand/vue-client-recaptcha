@@ -24,7 +24,7 @@ app.component("VueClientRecaptcha", VueClientRecaptcha);
 ```
 2. You can import localy in your vue-3 component
 ```javascript
-import VueClientRecaptcha from 'vue-client-recaptcha/dist/vue-client-recaptcha.es'
+import VueClientRecaptcha from 'vue-client-recaptcha'
 
 <!--Optional style.css-->
 import 'vue-client-recaptcha/dist/style.css';
