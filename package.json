@@ -1,6 +1,6 @@
 {
   "name": "vue-client-recaptcha",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "author": "parsajiravand",
   "license": "MIT",
   "description": "Build simple recaptcha for vuejs without need server",
@@ -34,5 +34,16 @@
     "vite-plugin-package-config": "^0.1.1",
     "vue": "3.2.25",
     "vue-tsc": "0.29.5"
-  }
+  },
+  "keywords": [
+    "recaptcha",
+    "vue client recaptcha",
+    "vue recaptcha",
+    "vue 3",
+    "vue-3",
+    "captcha",
+    "simple captcha",
+    "simple vue recaptcha",
+    "vue3 package"
+  ]
 }
