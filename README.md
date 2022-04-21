@@ -17,7 +17,7 @@ yarn add vue-client-recaptcha
 
 ```javascript
 import { createApp } from 'vue'
-import VueClientRecaptcha from 'vue-client-recaptcha/dist/vue-client-recaptcha.es'
+import VueClientRecaptcha from 'vue-client-recaptcha'
 
 const app= createApp(App)
 app.component("VueClientRecaptcha", VueClientRecaptcha);  
@@ -76,7 +76,7 @@ export default {
 
 <script>
 import { ref } from "vue";
-import VueClientRecaptcha from "vue-client-recaptcha/dist/vue-client-recaptcha.es";
+import VueClientRecaptcha from "vue-client-recaptcha";
 import "vue-client-recaptcha/dist/style.css";
 export default {
   components: {
@@ -129,7 +129,7 @@ export default {
 
 <script>
 import { ref } from "vue";
-import VueClientRecaptcha from "vue-client-recaptcha/dist/vue-client-recaptcha.es";
+import VueClientRecaptcha from "vue-client-recaptcha";
 import "vue-client-recaptcha/dist/style.css";
 export default {
   components: {
@@ -175,7 +175,7 @@ export default {
 
 <script>
 import { ref } from "vue";
-import VueClientRecaptcha from "vue-client-recaptcha/dist/vue-client-recaptcha.es";
+import VueClientRecaptcha from "vue-client-recaptcha";
 import "vue-client-recaptcha/dist/style.css";
 export default {
   components: {
