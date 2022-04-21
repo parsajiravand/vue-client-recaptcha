@@ -17,14 +17,14 @@ yarn add vue-client-recaptcha
 
 ```javascript
 import { createApp } from 'vue'
-import VueClientRecaptcha from 'vue-client-recaptcha/dist/vue-client-recaptcha.es'
+import VueClientRecaptcha from 'vue-client-recaptcha'
 
 const app= createApp(App)
 app.component("VueClientRecaptcha", VueClientRecaptcha);  
 ```
 2. You can import localy in your vue-3 component
 ```javascript
-import VueClientRecaptcha from 'vue-client-recaptcha/dist/vue-client-recaptcha.es'
+import VueClientRecaptcha from 'vue-client-recaptcha'
 
 <!--Optional style.css-->
 import 'vue-client-recaptcha/dist/style.css';
@@ -76,7 +76,7 @@ export default {
 
 <script>
 import { ref } from "vue";
-import VueClientRecaptcha from "vue-client-recaptcha/dist/vue-client-recaptcha.es";
+import VueClientRecaptcha from "vue-client-recaptcha";
 import "vue-client-recaptcha/dist/style.css";
 export default {
   components: {
@@ -129,7 +129,7 @@ export default {
 
 <script>
 import { ref } from "vue";
-import VueClientRecaptcha from "vue-client-recaptcha/dist/vue-client-recaptcha.es";
+import VueClientRecaptcha from "vue-client-recaptcha";
 import "vue-client-recaptcha/dist/style.css";
 export default {
   components: {
@@ -175,7 +175,7 @@ export default {
 
 <script>
 import { ref } from "vue";
-import VueClientRecaptcha from "vue-client-recaptcha/dist/vue-client-recaptcha.es";
+import VueClientRecaptcha from "vue-client-recaptcha";
 import "vue-client-recaptcha/dist/style.css";
 export default {
   components: {
