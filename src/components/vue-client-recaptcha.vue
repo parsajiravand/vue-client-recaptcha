@@ -9,6 +9,7 @@ interface Props {
   count?: number;
   hideLines?: boolean;
   customTextColor?: string;
+  textColors?: string[];
   isDirty?: boolean;
   width?: any;
   height?: number;
@@ -22,6 +23,7 @@ const props = withDefaults(defineProps<Props>(), {
   count: 5,
   hideLines: false,
   customTextColor: "",
+  textColors: () => [],
   isDirty: true,
   width: function (props: any) {
     return props.count * 30;
@@ -71,6 +73,9 @@ const captcha = () => {
     ctx.translate(x, y);
     if (props.customTextColor) {
       ctx.fillStyle = props.customTextColor;
+    } else if (props.textColors) {
+      ctx.fillStyle =
+        props.textColors[Math.floor(Math.random() * props.textColors.length)];
     } else {
       ctx.fillStyle = randomColor();
     }
