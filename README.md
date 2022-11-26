@@ -44,7 +44,8 @@ export default {
 | chars               | characters that captcha should be made with.                              | `string` | `abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789`                                                                
 | count  | number of character | `number`  | `5`   
 | hideLines  | hide dirty line and make captcha simple | `boolean`  | `false`   
-| customTextColor  | set text color for characters | `string`  | ``   
+| customTextColor  | set text color for all characters | `string`  | ``   
+| textColors  | set random text color for each character in array of list | `string[]`  | ``   
 | width  | width of captcha | `any`  | `count * 30`
 | height  | width of captcha | `number`  | `50`
 | canvasClass  | can set custom class for canvas | `string`  | ``
@@ -201,6 +202,62 @@ export default {
   },
 };
 </script>
+```
+
+####  SampleWithListOfColorsAndOptionAPI
+```html
+<template>
+  <div class="sample-captcha">
+    <input type="text" v-model="inputValue" />
+
+    <!-- create list for carachters and select random color for each item -->
+    <VueClientRecaptcha
+      :value="inputValue"
+      :textColors="[
+        'blue',
+        'red',
+        'purple',
+        'green',
+        '#e83e8c',
+        '#ff5578',
+        '#53b29f',
+        '#d64a37',
+        '#094899',
+        '#f64141',
+        'rgb(77,190,255)',
+      ]"
+      @getCode="getCaptchaCode"
+      @isValid="checkValidCaptcha"
+    />
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from "vue";
+import VueClientRecaptcha from "./components/vue-client-recaptcha.vue";
+export default defineComponent({
+  components: {
+    VueClientRecaptcha,
+  },
+
+  data() {
+    return {
+      inputValue: null,
+    };
+  },
+  methods: {
+    getCaptchaCode(value: string) {
+      /* you can access captcha code */
+      console.log("captcha code", value);
+    },
+    checkValidCaptcha(value: string) {
+      /* expected return boolean if your value and captcha code are same return True otherwise return False */
+      console.log(value);
+    },
+  },
+});
+</script>
+
 ```
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
