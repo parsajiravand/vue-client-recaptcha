@@ -5,19 +5,7 @@
     <!-- create list for carachters and select random color for each item -->
     <VueClientRecaptcha
       :value="inputValue"
-      :textColors="[
-        'blue',
-        'red',
-        'purple',
-        'green',
-        '#e83e8c',
-        '#ff5578',
-        '#53b29f',
-        '#d64a37',
-        '#094899',
-        '#f64141',
-        'rgb(77,190,255)',
-      ]"
+     customTextColor="blue"
       @getCode="getCaptchaCode"
       @isValid="checkValidCaptcha"
     />

@@ -35,7 +35,6 @@ const props = withDefaults(defineProps<Props>(), {
 
 /* access slots */
 const slots = useSlots();
-console.log(slots.header);
 /* access slots */
 
 /* emits to parnet */
@@ -73,7 +72,7 @@ const captcha = () => {
     ctx.translate(x, y);
     if (props.customTextColor) {
       ctx.fillStyle = props.customTextColor;
-    } else if (props.textColors) {
+    } else if (props.textColors.length) {
       ctx.fillStyle =
         props.textColors[Math.floor(Math.random() * props.textColors.length)];
     } else {

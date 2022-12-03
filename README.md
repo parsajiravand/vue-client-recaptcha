@@ -1,7 +1,43 @@
 
-# vue-client-recaptcha
-Build simple recaptcha for vuejs without need server
-![vue-client-recaptcha](https://i.postimg.cc/1fF5NyVV/captcha.png)
+
+<br>
+<p align="center">
+  <a href="http://vue-client-recaptcha.netlify.com"><img src="https://i.postimg.cc/1fF5NyVV/captcha.png" alt="Demo" width="160"></a>
+  <h2 align="center">vue-client-recaptcha</h2>
+  <p align="center">Build simple recaptcha for vuejs without need server</p>
+</p>
+
+<p align="center">
+  <a href="https://www.npmjs.com/package/vue-client-recaptcha">
+    <img src="https://img.shields.io/npm/v/vue-client-recaptcha.svg?style=flat-square" alt="version">
+  </a>
+  <a href="https://github.com/parsajiravand/vue-client-recaptcha/blob/master/LICENSE">
+    <img src="https://img.shields.io/npm/l/vue-client-recaptcha.svg?style=flat-square" alt="MIT license">
+  </a>
+  <a href="http://npmcharts.com/compare/vue-client-recaptcha">
+    <img src="https://img.shields.io/npm/dm/vue-client-recaptcha.svg?style=flat-square" alt="downloads">
+  </a>
+  <br>
+  <a href="https://unpkg.com/vue-client-recaptcha/dist/">
+    <img src="http://img.badgesize.io/https://unpkg.com/vue-client-recaptcha/dist/vue-client-recaptcha.umd.js?compression=gzip&label=gzip%20size&style=flat-square" alt="gzip size">
+  </a>
+  <a href="https://github.com/parsajiravand/vue-client-recaptcha/blob/master/package.json">
+    <img src="https://img.shields.io/badge/dependencies-none-lightgrey.svg?style=flat-square" alt="no dependencies">
+  </a>
+  <a href="https://travis-ci.org/parsajiravand/vue-client-recaptcha">
+    <img src="https://img.shields.io/travis/parsajiravand/vue-client-recaptcha.svg?style=flat-square" alt="travis">
+  </a>
+</p>
+
+<p align="center">
+  <br>
+  <strong>
+  <a style="font-size:20px" href="https://vue-client-recaptcha.netlify.app/usage"> 📚Document</a> ・
+  <a style="font-size:20px" href="https://vue-client-recaptcha.netlify.app/demos">🔎 Demos</a> ・
+  <a style="font-size:20px" href="https://vue-client-recaptcha.netlify.app/playground"> 🔬 Playground</a>
+  </strong>
+</p>
+
 ## Dependencies
 - required: Vuejs >= 3.x
 
@@ -102,160 +138,6 @@ export default {
     };
   },
 };
-</script>
-
-```
-####  SampleSimpleMode
-```html
-<template>
-  <div class="sample-captcha">
-    <input type="text" v-model="inputValue" />
-    <!-- Hide Letters And Show NumbersOnly Without Lines -->
-    <!-- Can Set Your Custom Icon Or Text With Slot -->
-    <VueClientRecaptcha
-      :value="inputValue"
-      :count="4"
-      chars="12345"
-      :hideLines="true"
-      custom-text-color="black"
-      @getCode="getCaptchaCode"
-      @isValid="checkValidCaptcha"
-    >
-      <template #icon>
-       <span style="color:blue">with Custom Text Or Icon</span> 
-        </template>
-    </VueClientRecaptcha>
-  </div>
-</template>
-
-<script>
-import { ref } from "vue";
-import VueClientRecaptcha from "vue-client-recaptcha";
-import "vue-client-recaptcha/dist/style.css";
-export default {
-  components: {
-    VueClientRecaptcha,
-  },
-  setup() {
-    /* pass value to captcha  */
-    const inputValue = ref(null);
-
-    const getCaptchaCode = (value) => {
-      /* you can access captcha code */
-      console.log(value);
-    };
-    const checkValidCaptcha = (value) => {
-      /* expected return boolean if your value and captcha code are same return True otherwise return False */
-      console.log(value);
-    };
-    return {
-      inputValue,
-      getCaptchaCode,
-      checkValidCaptcha,
-    };
-  },
-};
-</script>
-```
-####  SampleWithCustomLetter
-```html
-<template>
-  <div class="sample-captcha">
-    <input type="text" v-model="inputValue" />
-    <!-- Hide CapitalCase And Number And Set Custom Carachters -->
-    <!-- Set 10 Charachter -->
-    <VueClientRecaptcha
-      :value="inputValue"
-      chars="!@#$%^&*"
-      :count="10"
-      @getCode="getCaptchaCode"
-      @isValid="checkValidCaptcha"
-    />
-  </div>
-</template>
-
-<script>
-import { ref } from "vue";
-import VueClientRecaptcha from "vue-client-recaptcha";
-import "vue-client-recaptcha/dist/style.css";
-export default {
-  components: {
-    VueClientRecaptcha,
-  },
-  setup() {
-    /* pass value to captcha  */
-    const inputValue = ref(null);
-
-    const getCaptchaCode = (value) => {
-      /* you can access captcha code */
-      console.log(value);
-    };
-    const checkValidCaptcha = (value) => {
-      /* expected return boolean if your value and captcha code are same return True otherwise return False */
-      console.log(value);
-    };
-    return {
-      inputValue,
-      getCaptchaCode,
-      checkValidCaptcha,
-    };
-  },
-};
-</script>
-```
-
-####  SampleWithListOfColorsAndOptionAPI
-```html
-<template>
-  <div class="sample-captcha">
-    <input type="text" v-model="inputValue" />
-
-    <!-- create list for carachters and select random color for each item -->
-    <VueClientRecaptcha
-      :value="inputValue"
-      :textColors="[
-        'blue',
-        'red',
-        'purple',
-        'green',
-        '#e83e8c',
-        '#ff5578',
-        '#53b29f',
-        '#d64a37',
-        '#094899',
-        '#f64141',
-        'rgb(77,190,255)',
-      ]"
-      @getCode="getCaptchaCode"
-      @isValid="checkValidCaptcha"
-    />
-  </div>
-</template>
-
-<script lang="ts">
-import { defineComponent } from "vue";
-import VueClientRecaptcha from "./components/vue-client-recaptcha.vue";
-export default defineComponent({
-  components: {
-    VueClientRecaptcha,
-  },
-
-  data() {
-    return {
-      inputValue: null,
-    };
-  },
-  methods: {
-    getCaptchaCode(value: string) {
-      /* you can access captcha code */
-      console.log("captcha code", value);
-    },
-    checkValidCaptcha(value: string) {
-      /* expected return boolean if your value and captcha code are same return True otherwise return False */
-      console.log(value);
-    },
-  },
-});
 </script>
 
 ```
