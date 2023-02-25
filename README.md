@@ -1,11 +1,18 @@
-
-
 <br>
 <p align="center">
-  <a href="http://vue-client-recaptcha.netlify.com"><img src="https://i.postimg.cc/1fF5NyVV/captcha.png" alt="Demo" width="160"></a>
+  <a href="http://vue-client-recaptcha.netlify.com"><img src="https://i.postimg.cc/CM6ZjS2F/vue-client-recaptcha.png" alt="Demo" width="140"></a>
+  </br>
+
   <h2 align="center">vue-client-recaptcha</h2>
   <p align="center">Build simple recaptcha for vuejs without need server</p>
+  </br>
+  <div align="center">
+    <a 
+    href="http://vue-client-recaptcha.netlify.com"><img src="https://i.postimg.cc/1fF5NyVV/captcha.png" alt="Demo" width="160">
+    </a>
+  </div>
 </p>
+  </br>
 
 <p align="center">
   <a href="https://www.npmjs.com/package/vue-client-recaptcha">
@@ -39,26 +46,33 @@
 </p>
 
 ## Dependencies
+
 - required: Vuejs >= 3.x
 
 ## Installation
+
 ```bash
 npm install vue-client-recaptcha --save
 ```
+
 ```bash
 yarn add vue-client-recaptcha
 ```
+
 ## Usage
+
 1. You can import globally in your vue-3 project (main.js)
 
 ```javascript
-import { createApp } from 'vue'
-import VueClientRecaptcha from 'vue-client-recaptcha'
+import { createApp } from "vue";
+import VueClientRecaptcha from "vue-client-recaptcha";
 
-const app= createApp(App)
-app.component("VueClientRecaptcha", VueClientRecaptcha);  
+const app = createApp(App);
+app.component("VueClientRecaptcha", VueClientRecaptcha);
 ```
+
 2. You can import localy in your vue-3 component
+
 ```javascript
 import VueClientRecaptcha from 'vue-client-recaptcha'
 
@@ -74,30 +88,33 @@ export default {
 
 ## Props
 
-| Name                  | Description                                                       | Type       | Default               |
-| --------------------  | -------------------------------------------------------------------------------------------------------------------- | --------   | ------------------------|
-| value                   | send the value with the component and check the entered value correctly                            | `string`   | ``                                                                |
-| chars               | characters that captcha should be made with.                              | `string` | `abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789`                                                                
-| count  | number of character | `number`  | `5`   
-| hideLines  | hide dirty line and make captcha simple | `boolean`  | `false`   
-| customTextColor  | set text color for all characters | `string`  | ``   
-| textColors  | set random text color for each character in array of list | `string[]`  | ``   
-| width  | width of captcha | `any`  | `count * 30`
-| height  | width of captcha | `number`  | `50`
-| canvasClass  | can set custom class for canvas | `string`  | ``
-                                                                                                          
+| Name            | Description                                                             | Type       | Default                                                          |
+| --------------- | ----------------------------------------------------------------------- | ---------- | ---------------------------------------------------------------- |
+| value           | send the value with the component and check the entered value correctly | `string`   | ``                                                               |
+| chars           | characters that captcha should be made with.                            | `string`   | `abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789` |
+| count           | number of character                                                     | `number`   | `5`                                                              |
+| hideLines       | hide dirty line and make captcha simple                                 | `boolean`  | `false`                                                          |
+| customTextColor | set text color for all characters                                       | `string`   | ``                                                               |
+| textColors      | set random text color for each character in array of list               | `string[]` | ``                                                               |
+| width           | width of captcha                                                        | `any`      | `count * 30`                                                     |
+| height          | width of captcha                                                        | `number`   | `50`                                                             |
+| canvasClass     | can set custom class for canvas                                         | `string`   | ``                                                               |
+
 ## Events
 
-| Event            | Value  | Description                                    |
-| ---------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Event      | Value   | Description                                                                                    |
+| ---------- | ------- | ---------------------------------------------------------------------------------------------- |
 | `@isValid` | Boolean | can listen to payload , if your value and captcha code same return True otherwise return False |
-| `@getCode` | String | can listen to payload , get captcha value and set variable |
+| `@getCode` | String  | can listen to payload , get captcha value and set variable                                     |
+
 ## Slots
 
-| Name    | Description |
-| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `icon`  | can set your custom template for icon  or changed to text (default icon is 'refresh' from fontawsome also you can change it with props  |     
-###  Examples
+| Name   | Description                                                                                                                           |
+| ------ | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `icon` | can set your custom template for icon or changed to text (default icon is 'refresh' from fontawsome also you can change it with props |
+
+### Examples
+
 ```html
 <template>
   <div class="sample-captcha">
@@ -112,39 +129,41 @@ export default {
 </template>
 
 <script>
-import { ref } from "vue";
-import VueClientRecaptcha from "vue-client-recaptcha";
-import "vue-client-recaptcha/dist/style.css";
-export default {
-  components: {
-    VueClientRecaptcha,
-  },
-  setup() {
-    /* pass value to captcha  */
-    const inputValue = ref(null);
+  import { ref } from "vue";
+  import VueClientRecaptcha from "vue-client-recaptcha";
+  import "vue-client-recaptcha/dist/style.css";
+  export default {
+    components: {
+      VueClientRecaptcha,
+    },
+    setup() {
+      /* pass value to captcha  */
+      const inputValue = ref(null);
 
-    const getCaptchaCode = (value) => {
-      /* you can access captcha code */
-      console.log(value);
-    };
-    const checkValidCaptcha = (value) => {
-      /* expected return boolean if your value and captcha code are same return True otherwise return False */
-      console.log(value);
-    };
-    return {
-      inputValue,
-      getCaptchaCode,
-      checkValidCaptcha,
-    };
-  },
-};
+      const getCaptchaCode = (value) => {
+        /* you can access captcha code */
+        console.log(value);
+      };
+      const checkValidCaptcha = (value) => {
+        /* expected return boolean if your value and captcha code are same return True otherwise return False */
+        console.log(value);
+      };
+      return {
+        inputValue,
+        getCaptchaCode,
+        checkValidCaptcha,
+      };
+    },
+  };
 </script>
-
 ```
+
 ## Contributing
+
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 Please make sure to update tests as appropriate.
 
 ## License
+
 [MIT](https://choosealicense.com/licenses/mit/)
