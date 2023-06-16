@@ -17,6 +17,7 @@ const props = withDefaults(
     height?: number;
     canvasClass?: string;
     icon?: string;
+    captchaFont?: string;
   }>(),
   {
     value: "",
@@ -32,6 +33,7 @@ const props = withDefaults(
     height: 50,
     canvasClass: "",
     icon: "refresh",
+    captchaFont: "bold 28px sans-serif",
   }
 );
 
@@ -70,7 +72,8 @@ const captcha = () => {
     /* props.chars = cTxt.toLowerCase(); */
     let x = 10 + i * 25;
     let y = 30 + Math.random() * 8;
-    ctx.font = "bold 28px 微软雅黑";
+    // ctx font list https://www.w3school.com.cn/tags/canvas_font.asp
+    ctx.font = props.captchaFont;
     ctx.translate(x, y);
     if (props.customTextColor) {
       ctx.fillStyle = props.customTextColor;
