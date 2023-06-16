@@ -3,35 +3,37 @@
 </template>
 <script setup lang="ts">
 import { h, ref, onMounted, watchEffect, useSlots } from "vue";
-interface Props {
-  value?: string | null;
-  chars?: string;
-  count?: number;
-  hideLines?: boolean;
-  customTextColor?: string;
-  textColors?: string[];
-  isDirty?: boolean;
-  width?: any;
-  height?: number;
-  canvasClass?: string;
-  icon?: string;
-}
 
-const props = withDefaults(defineProps<Props>(), {
-  value: "",
-  chars: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
-  count: 5,
-  hideLines: false,
-  customTextColor: "",
-  textColors: () => [],
-  isDirty: true,
-  width: function (props: any) {
-    return props.count * 30;
-  },
-  height: 50,
-  canvasClass: "",
-  icon: "refresh",
-});
+const props = withDefaults(
+  defineProps<{
+    value?: string | null;
+    chars?: string;
+    count?: number;
+    hideLines?: boolean;
+    customTextColor?: string;
+    textColors?: string[];
+    isDirty?: boolean;
+    width?: any;
+    height?: number;
+    canvasClass?: string;
+    icon?: string;
+  }>(),
+  {
+    value: "",
+    chars: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
+    count: 5,
+    hideLines: false,
+    customTextColor: "",
+    textColors: () => [],
+    isDirty: true,
+    width: function (props: any) {
+      return props.count * 30;
+    },
+    height: 50,
+    canvasClass: "",
+    icon: "refresh",
+  }
+);
 
 /* access slots */
 const slots = useSlots();
@@ -127,10 +129,23 @@ const render = () => {
       "div",
       { class: "vue_client_recaptcha_icon", onClick: () => resetCaptcha() },
       [
-        h(slots.icon ? slots.icon : "img", {
-          src: "https://www.freeiconspng.com/uploads/black-refresh-icon-png-9.png",
-          style: "width:60px",
-        }),
+        h(
+          slots.icon ? slots.icon : "svg",
+          {
+            class: "vue_client_recaptcha_icon_svg",
+            width: "24",
+            height: "24",
+            viewBox: "0 0 24 24",
+            fill: "none",
+            xmlns: "http://www.w3.org/2000/svg",
+          },
+          [
+            h("path", {
+              d: "M2 12a9 9 0 0 0 9 9c2.39 0 4.68-.94 6.4-2.6l-1.5-1.5A6.706 6.706 0 0 1 11 19c-6.24 0-9.36-7.54-4.95-11.95C10.46 2.64 18 5.77 18 12h-3l4 4h.1l3.9-4h-3a9 9 0 0 0-18 0Z",
+              fill: "#333333",
+            }),
+          ]
+        ),
       ]
     ),
     h(
@@ -151,6 +166,7 @@ const render = () => {
   justify-content: center;
   flex-direction: row;
 }
+
 .vue_client_recaptcha_icon {
   text-align: center;
   padding: 10px;
@@ -159,6 +175,7 @@ const render = () => {
   align-items: center;
   justify-content: center;
   background-color: #eee;
+  transition: background-color 0.3s ease-in-out;
 }
 .vue_client_recaptcha_icon:hover {
   background-color: #cccccc;
