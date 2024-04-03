@@ -18,6 +18,7 @@ const props = withDefaults(
     canvasClass?: string;
     icon?: string;
     captchaFont?: string;
+    hideRefreshIcon?: boolean;
   }>(),
   {
     value: "",
@@ -34,6 +35,7 @@ const props = withDefaults(
     canvasClass: "",
     icon: "refresh",
     captchaFont: "bold 28px sans-serif",
+    hideRefreshIcon: false,
   }
 );
 
@@ -126,10 +128,15 @@ const resetCaptcha = () => {
   code.value = "";
   captcha();
 };
+// expose public methods
+defineExpose({
+  resetCaptcha,
+});
+// render function
 const render = () => {
   return h("div", { class: "vue_client_recaptcha" }, [
     h(
-      "div",
+      props.hideRefreshIcon ? "" : "div",
       { class: "vue_client_recaptcha_icon", onClick: () => resetCaptcha() },
       [
         h(
