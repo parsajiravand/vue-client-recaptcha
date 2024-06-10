@@ -14,7 +14,6 @@ const checkValidCaptcha = (value) => {
   console.log(value);
 };
 const captchaRef = ref(null);
-
 </script>
 <template>
   <div>
@@ -25,10 +24,12 @@ const captchaRef = ref(null);
     <VueClientRecaptcha
       ref="captchaRef"
       :value="inputValue"
-      :hideRefreshIcon="true"
+     
       @getCode="getCaptchaCode"
       @isValid="checkValidCaptcha"
-    />
+    >
+      <template #icon> test </template>
+    </VueClientRecaptcha>
   </div>
 </template>
 
