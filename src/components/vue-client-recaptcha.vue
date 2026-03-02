@@ -19,6 +19,7 @@ const props = withDefaults(
     icon?: string;
     captchaFont?: string;
     hideRefreshIcon?: boolean;
+    radius?: number;
   }>(),
   {
     value: "",
@@ -36,6 +37,7 @@ const props = withDefaults(
     icon: "refresh",
     captchaFont: "bold 28px sans-serif",
     hideRefreshIcon: false,
+    radius: 0,
   }
 );
 
@@ -134,42 +136,57 @@ defineExpose({
 });
 // render function
 const render = () => {
-  return h("div", { class: "vue_client_recaptcha" }, [
-    h(
-      props.hideRefreshIcon ? "" : "div",
-      { class: "vue_client_recaptcha_icon", onClick: () => resetCaptcha() },
-      [
-        slots.icon
-          ? h(slots.icon)
-          : h(
-              "svg",
-              {
-                class: "vue_client_recaptcha_icon_svg",
-                width: "24",
-                height: "24",
-                viewBox: "0 0 24 24",
-                fill: "none",
-                xmlns: "http://www.w3.org/2000/svg",
-              },
-              [
-                h("path", {
-                  d: "M2 12a9 9 0 0 0 9 9c2.39 0 4.68-.94 6.4-2.6l-1.5-1.5A6.706 6.706 0 0 1 11 19c-6.24 0-9.36-7.54-4.95-11.95C10.46 2.64 18 5.77 18 12h-3l4 4h.1l3.9-4h-3a9 9 0 0 0-18 0Z",
-                  fill: "#333333",
-                }),
-              ]
-            ),
-      ]
-    ),
-    h(
-      "canvas",
-      {
-        id: "captcha_canvas",
-        class: `captcha_canvas ${props.canvasClass}`,
-        ref: captcha_canvas,
+  return h(
+    "div",
+    {
+      class: "vue_client_recaptcha",
+      style: {
+        borderRadius: `${props.radius}px`,
+        width: `${props.width + 50}px`,
       },
-      code.value
-    ),
-  ]);
+    },
+    [
+      h(
+        props.hideRefreshIcon ? "" : "div",
+        {
+          class: "vue_client_recaptcha_icon",
+
+          onClick: () => resetCaptcha(),
+        },
+        [
+          slots.icon
+            ? h(slots.icon)
+            : h(
+                "svg",
+                {
+                  class: "vue_client_recaptcha_icon_svg",
+                  width: "24",
+                  height: "24",
+                  viewBox: "0 0 24 24",
+                  fill: "none",
+                  xmlns: "http://www.w3.org/2000/svg",
+                },
+                [
+                  h("path", {
+                    d: "M2 12a9 9 0 0 0 9 9c2.39 0 4.68-.94 6.4-2.6l-1.5-1.5A6.706 6.706 0 0 1 11 19c-6.24 0-9.36-7.54-4.95-11.95C10.46 2.64 18 5.77 18 12h-3l4 4h.1l3.9-4h-3a9 9 0 0 0-18 0Z",
+                    fill: "#333333",
+                  }),
+                ]
+              ),
+        ]
+      ),
+      h(
+        "canvas",
+        {
+          id: "captcha_canvas",
+          class: `captcha_canvas ${props.canvasClass}`,
+
+          ref: captcha_canvas,
+        },
+        code.value
+      ),
+    ]
+  );
 };
 </script>
 <style>
@@ -177,6 +194,8 @@ const render = () => {
   display: flex;
   justify-content: center;
   flex-direction: row;
+  direction: ltr;
+  background-color: #eee;
 }
 
 .vue_client_recaptcha_icon {
@@ -186,14 +205,13 @@ const render = () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #eee;
   transition: background-color 0.3s ease-in-out;
 }
-.vue_client_recaptcha_icon:hover {
+/* .vue_client_recaptcha_icon:hover {
   background-color: #cccccc;
-}
+} */
 .vue_client_recaptcha .captcha_canvas {
-  background: #eee;
   padding: 10px 0px;
+  margin-left: 10px;
 }
 </style>

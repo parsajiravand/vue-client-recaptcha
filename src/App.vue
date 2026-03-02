@@ -24,9 +24,10 @@ const captchaRef = ref(null);
     <VueClientRecaptcha
       ref="captchaRef"
       :value="inputValue"
-     
+     :count="3"
       @getCode="getCaptchaCode"
       @isValid="checkValidCaptcha"
+      :radius="20"
     >
       <template #icon> test </template>
     </VueClientRecaptcha>
