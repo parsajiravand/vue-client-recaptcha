@@ -1,36 +1,27 @@
 <script lang="ts" setup>
 import VueClientRecaptcha from "./components/vue-client-recaptcha.vue";
-
 import { ref } from "vue";
-/* pass value to captcha  */
-const inputValue = ref(null);
 
-const getCaptchaCode = (value) => {
-  /* you can access captcha code */
-  console.log(value);
-};
-const checkValidCaptcha = (value) => {
-  /* expected return boolean if your value and captcha code are same return True otherwise return False */
-  console.log(value);
-};
-const captchaRef = ref(null);
+const inputValue = ref("");
+const isValid = ref(false);
+const captchaRef = ref<InstanceType<typeof VueClientRecaptcha> | null>(null);
+
+const getCaptchaCode = (value: string) => console.log("Code:", value);
+const checkValidCaptcha = (value: boolean) => console.log("Valid:", value);
 </script>
 <template>
   <div>
-    <!-- Button for resest captcha -->
-    <button @click="captchaRef.resetCaptcha()">Reset Captcha</button>
-
-    <!-- VueClientRecaptcha component -->
+    <input v-model="inputValue" placeholder="Enter captcha" />
+    <button @click="captchaRef?.resetCaptcha?.()">Reset Captcha</button>
     <VueClientRecaptcha
       ref="captchaRef"
-      :value="inputValue"
-     :count="3"
+      v-model="inputValue"
+      v-model:valid="isValid"
+      :count="3"
       @getCode="getCaptchaCode"
       @isValid="checkValidCaptcha"
       :radius="20"
-    >
-      <template #icon> test </template>
-    </VueClientRecaptcha>
+    />
   </div>
 </template>
 

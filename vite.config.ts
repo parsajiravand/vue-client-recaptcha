@@ -8,8 +8,7 @@ import pkg from "./package.json";
 export default defineConfig({
   build: {
     lib: {
-      banner,
-      entry: path.resolve(__dirname, "src/components/vue-client-recaptcha.vue"),
+      entry: path.resolve(__dirname, "src/index.ts"),
       name: "VueClientRecaptcha",
       fileName: (format) => `vue-client-recaptcha.${format}.js`,
     },
