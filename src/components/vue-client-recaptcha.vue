@@ -169,6 +169,23 @@ watch(
   },
   { flush: "post" }
 );
+
+// Watch for visual prop changes to regenerate captcha
+watch(
+  [
+    () => props.distortion,
+    () => props.noiseDots,
+    () => props.noiseLines,
+    () => props.hideLines,
+    () => props.customTextColor,
+    () => props.textColors,
+    () => props.captchaFont
+  ],
+  () => {
+    if (captcha_canvas.value) captcha();
+  },
+  { flush: "post" }
+);
 const captcha = () => {
   if (!captcha_canvas.value) return;
   code.value = "";
