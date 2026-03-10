@@ -115,6 +115,7 @@ const checkValidCaptcha = (valid) => console.log('Valid:', valid);
 | `noiseDots` | `number` | `0` | Number of noise dots (0 = off) |
 | `noiseLines` | `number` | `-1` | Distortion lines (-1 = use `count`) |
 | `audioEnabled` | `boolean` | `false` | Speak code for screen readers |
+| `simpleMode` | `boolean` | `false` | Clean, straight-line text with single color |
 
 ### Events
 

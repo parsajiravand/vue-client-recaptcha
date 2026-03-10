@@ -79,6 +79,7 @@ const props = withDefaults(
     noiseLines?: number;
     distortion?: "none" | "lines" | "dots" | "both";
     audioEnabled?: boolean;
+    simpleMode?: boolean;
   }>(),
   {
     modelValue: "",
@@ -103,6 +104,7 @@ const props = withDefaults(
     noiseLines: -1,
     distortion: "lines",
     audioEnabled: false,
+    simpleMode: false,
   }
 );
 
@@ -179,7 +181,9 @@ watch(
     () => props.hideLines,
     () => props.customTextColor,
     () => props.textColors,
-    () => props.captchaFont
+    () => props.captchaFont,
+    () => props.simpleMode,
+    () => props.theme
   ],
   () => {
     if (captcha_canvas.value) captcha();
@@ -200,33 +204,47 @@ const captcha = () => {
   captchaLogic.generate();
   const codeStr = code.value;
   if (!codeStr) return;
-  for (let i = 0; i < codeStr.length; i++) {
-    const cTxt = codeStr[i]!;
-    const sDeg = (secureRandom() * 30 * Math.PI) / 180;
-    const x = 10 + i * 25;
-    const y = 30 + secureRandom() * 8;
-    // ctx font list https://www.w3school.com.cn/tags/canvas_font.asp
+
+  if (props.simpleMode) {
+    // Simple mode: straight line, single color, no rotation
+    const isDark = props.theme === "dark" || (props.theme === "auto" && window.matchMedia?.("(prefers-color-scheme: dark)").matches);
+    ctx.fillStyle = isDark ? "#ffffff" : "#000000";
     ctx.font = props.captchaFont;
-    ctx.translate(x, y);
-    if (props.customTextColor) {
-      ctx.fillStyle = props.customTextColor;
-    } else if (props.textColors.length) {
-      ctx.fillStyle =
-        props.textColors[Math.floor(secureRandom() * props.textColors.length)]!;
-    } else {
-      ctx.fillStyle = randomColor();
+    ctx.textAlign = "center";
+    ctx.fillText(codeStr, canvasWidth.value / 2, canvasHeight.value / 2 + 10);
+  } else {
+    // Normal mode with rotation and colors
+    for (let i = 0; i < codeStr.length; i++) {
+      const cTxt = codeStr[i]!;
+      const sDeg = (secureRandom() * 30 * Math.PI) / 180;
+      const x = 10 + i * 25;
+      const y = 30 + secureRandom() * 8;
+      // ctx font list https://www.w3school.com.cn/tags/canvas_font.asp
+      ctx.font = props.captchaFont;
+      ctx.translate(x, y);
+      if (props.customTextColor) {
+        ctx.fillStyle = props.customTextColor;
+      } else if (props.textColors.length) {
+        ctx.fillStyle =
+          props.textColors[Math.floor(secureRandom() * props.textColors.length)]!;
+      } else {
+        ctx.fillStyle = randomColor();
+      }
+      ctx.rotate(sDeg);
+      ctx.fillText(cTxt, 0, 0);
+      ctx.rotate(-sDeg);
+      ctx.translate(-x, -y);
     }
-    ctx.rotate(sDeg);
-    ctx.fillText(cTxt, 0, 0);
-    ctx.rotate(-sDeg);
-    ctx.translate(-x, -y);
   }
-  const showLines =
-    !props.hideLines &&
-    (props.distortion === "lines" || props.distortion === "both");
-  const showDots = props.distortion === "dots" || props.distortion === "both";
-  if (showLines) createLines();
-  if (showDots && props.noiseDots) createNoiseDots();
+  // Skip distortion in simple mode
+  if (!props.simpleMode) {
+    const showLines =
+      !props.hideLines &&
+      (props.distortion === "lines" || props.distortion === "both");
+    const showDots = props.distortion === "dots" || props.distortion === "both";
+    if (showLines) createLines();
+    if (showDots && props.noiseDots) createNoiseDots();
+  }
   sendValueToParent();
   emit("refresh", code.value);
   if (props.audioEnabled && typeof window !== "undefined" && "speechSynthesis" in window) {

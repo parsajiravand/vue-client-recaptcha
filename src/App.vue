@@ -35,6 +35,10 @@ const iconValid = ref(false);
 const audioInput = ref("");
 const audioValid = ref(false);
 
+// Simple mode example
+const simpleInput = ref("");
+const simpleValid = ref(false);
+
 // useCaptcha composable example
 const { code: composableCode, generate: generateCaptcha, validate: validateCaptcha, reset: resetCaptcha } = useCaptcha({
   charsPreset: 'numeric',
@@ -223,9 +227,22 @@ const checkComposable = () => {
       </form>
     </section>
 
+    <!-- Simple mode -->
+    <section class="example">
+      <h2>10. Simple Mode</h2>
+      <input v-model="simpleInput" placeholder="Enter captcha" />
+      <VueClientRecaptcha
+        v-model="simpleInput"
+        v-model:valid="simpleValid"
+        :simple-mode="true"
+        :count="6"
+      />
+      <p class="status" :class="{ valid: simpleValid }">Clean, straight-line text (adapts to theme)</p>
+    </section>
+
     <!-- CSS Variables demo -->
     <section class="example">
-      <h2>10. CSS Variables (Theming)</h2>
+      <h2>11. CSS Variables (Theming)</h2>
       <input v-model="iconInput" placeholder="Enter captcha" />
       <VueClientRecaptcha
         v-model="iconInput"
